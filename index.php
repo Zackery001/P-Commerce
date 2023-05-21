@@ -1,5 +1,5 @@
 <?php include 'element/header.php'; ?>
-<?php include 'core/Stock.php'; ?>
+<?php include 'core/stock.php'; ?>
 
 <div class="container">
     <div class="row">
