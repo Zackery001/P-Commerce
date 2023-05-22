@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <form class="d-flex">
                     <div class = "text-center">
-                        <a class="dropdown-item" href="viewCat.php">Category</a>                  
+                        <a class="dropdown-item" href="insertCat.php">Category</a>                  
                     </div>
                 </form>
             </div>
