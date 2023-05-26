@@ -1,58 +1,16 @@
 <?php include 'element/header.php'; ?>
-<?php if(!isset($_POST['submit'])): ?>
-    <?php include 'element/navbar.php'; ?>
-<?php endif; ?>
+<?php include 'element/navbar.php'; ?>
 <?php include 'core/Stock.php'; ?>
 
 <div class="container">
     <div class="row">
 
-        <h2>Hello, from P-Commerce!</h2>
-
+        <?php include 'element/home.php'; ?>
+         <h1>This the incoming items page incoming items are inserted.</h1>
         <?php
 
         $stock = new Stock; 
         $showStock = $stock->getStock();
-        ?>
-
-         <h3>
-            <a class="btn btn-sm btn-primary mt-2" href = "index.php" >Refresh</a>
-        </h3>
-        <h3>
-            <a class="btn btn-sm btn-primary mt-2" href = "account.php" >Accounts</a>
-        </h3>
-
-        <div class = "container">
-            <div class="row">
-                <div class="border border-primary row p-2 col-8 offset-2 card">
-
-                    <?php
-                        echo "<h2 class='mt-3'>Analytics:</h2>";
-
-                        $incoming = $stock->analyticsIncomingCost();
-                        $incoming = $incoming[0][0] + 0;
-                        $item = $stock->analyticsIncomingProfit();
-                        $item = $item[0][0] + 0;
-                        $estimatedProfit = $item - $incoming;
-                        $soldProfit = $stock->analyticsSoldProfit();
-                        $soldCost = $stock->analyticsSoldCost();
-                        $madeProfit = $soldProfit[0][0] - $soldCost[0][0];
-                        $due = $stock->analyticsDue();
-                        $due = $due[0][0] + 0;
-
-                        echo "Total Cost Price:<h3>".$incoming."</h3>";
-                        echo "Total Selling Price :<h3>".$item."</h3>";
-                        echo "Estimated Profit on Products :<h3>".$estimatedProfit."</h3>";
-                        echo "Profit Made :<h3>".$madeProfit."</h3>";
-                        echo "Pending :<h3>".$due."</h3>";
-
-                    ?>
-                    
-                </div>
-            </div>
-        </div>
-
-        <?php
 
         if(isset($_POST['continue'])){
 
@@ -65,9 +23,9 @@
 
                 if(!empty($_POST['amount'])){
 
-                    $selling_price = $detail[0]['selling_price'] * $_POST['amount'] ;
                     $cost_price = $detail[0]['cost_price'] * $_POST['amount'];
-                    $stock->recordSold($detail[0]['id'], $_POST['amount'], $cost_price, $selling_price, 'paid', '0');
+                    $selling_price = $detail[0]['selling_price'] * $_POST['amount'] ;
+                    $stock->recordIncoming($detail[0]['id'], $_POST['amount'], $cost_price, $selling_price);
                     echo "<p class='alert alert-success'>
                         Successfully Recorded.</p>";
                 }else{
@@ -75,7 +33,7 @@
                     echo "<p class='alert alert-danger'>
                         Amount not mentioned.</p>";
                 }
-                
+
             }else{
                 echo "<p class='alert alert-warning'>
                     Something went wrong :( </p>";
@@ -90,8 +48,6 @@
         <div class="container mt-3">
             
             <div class="border border-primary row p-2 col-8 offset-2 card">
-
-                <h2>Sell Products:</h2>
                 
                 <form action="" method="POST">
                     <select style="width:420px" name="select" multiple size=10 multiselect-search="true">

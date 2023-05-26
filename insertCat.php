@@ -4,6 +4,7 @@
 
 <div class="container">
 	<div class="row">
+		<?php include "element/home.php";  ?>
 
 		<h1>This the insert category page where new data(categories) are inserted</h1>
 
@@ -12,9 +13,14 @@
 		if(isset($_POST['insert'])){
 
 			$stock = new Stock;
-            $stock->addCategory($_POST['category']);
-            echo "<p class='alert alert-success'>
-                Your category has been successfully inserted!</p>";
+			$stockCount = $stock->duplicateCategory($_POST['category']);
+			if (count($stockCount) > 0){
+				echo "<p class='alert alert-warning'>This category already exists</p>";
+			}else{
+				$stock->addCategory($_POST['category']);
+				echo "<p class='alert alert-success'>
+					Your category has been successfully inserted!</p>";
+			}
 				
 		}
 		
